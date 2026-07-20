@@ -1,0 +1,874 @@
+/* ==========================================================================
+   1. VARIÁVEIS GLOBAIS (PRETO, BRANCO E CINZA) & RESET
+   ========================================================================== */
+:root {
+    /* Cores Principais */
+    --color-black: #0d0d0d;
+    --color-dark: #1a1a1a;
+    --color-gray-dark: #333333;
+    --color-gray-medium: #707070;
+    --color-gray-light: #e5e5e7;
+    --color-gray-border: #d1d1d6;
+    --color-bg-light: #f4f4f6;
+    --color-white: #ffffff;
+    
+    /* Tipografia e Bordas */
+    --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    
+    /* Sombras */
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.15);
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Reset Básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--color-bg-light);
+    color: var(--color-black);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Centralização dos Containers Principais */
+main, .inventory-container, .contact-container, .about-container, .vehicle-details-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    flex: 1;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: var(--transition);
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ==========================================================================
+   2. BOTÕES E COMPONENTES GLOBAIS (ANIMADOS)
+   ========================================================================== */
+.btn, .btn-primary, .btn-cta, .btn-details, .btn-calc, .btn-filter, button[type="submit"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 28px;
+    background-color: var(--color-black);
+    color: var(--color-white);
+    border: 1px solid var(--color-black);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+.btn:hover, .btn-primary:hover, .btn-cta:hover, .btn-details:hover, .btn-calc:hover, .btn-filter:hover, button[type="submit"]:hover {
+    background-color: var(--color-dark);
+    color: var(--color-white);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn:active, .btn-primary:active {
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background-color: var(--color-white);
+    color: var(--color-black);
+    border: 1px solid var(--color-black);
+}
+
+.btn-secondary:hover {
+    background-color: var(--color-black);
+    color: var(--color-white);
+}
+
+/* Banners de Página */
+.page-banner {
+    background-color: var(--color-black);
+    color: var(--color-white);
+    text-align: center;
+    padding: 70px 20px;
+    margin-bottom: 20px;
+    animation: fadeIn 0.8s ease;
+}
+
+.page-banner h1 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    letter-spacing: -1px;
+}
+
+.page-banner p {
+    color: var(--color-gray-light);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Breadcrumb Centralizado */
+.breadcrumb {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto 30px;
+    padding: 15px 20px;
+    background: transparent;
+    font-size: 0.9rem;
+    color: var(--color-gray-medium);
+}
+
+.breadcrumb a {
+    color: var(--color-black);
+    font-weight: 600;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   3. HEADER & NAVBAR
+   ========================================================================== */
+.main-header {
+    background-color: var(--color-black);
+    color: var(--color-white);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: var(--shadow-md);
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 20px;
+}
+
+.logo {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: var(--color-white);
+}
+
+.logo span {
+    color: var(--color-gray-medium);
+}
+
+.main-nav ul {
+    display: flex;
+    gap: 30px;
+}
+
+.main-nav a {
+    color: var(--color-gray-light);
+    font-size: 0.95rem;
+    font-weight: 500;
+    position: relative;
+    padding: 5px 0;
+}
+
+.main-nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: var(--color-white);
+    transition: var(--transition);
+}
+
+.main-nav a:hover {
+    color: var(--color-white);
+}
+
+.main-nav a:hover::after {
+    width: 100%;
+}
+
+.btn-stock {
+    background-color: var(--color-white);
+    color: var(--color-black);
+    padding: 8px 20px;
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.btn-stock:hover {
+    background-color: var(--color-gray-light);
+    transform: scale(1.05);
+}
+
+/* ==========================================================================
+   4. HOME PAGE (HERO, SEARCH, CARDS, BENEFÍCIOS)
+   ========================================================================== */
+.hero {
+    background-color: var(--color-black);
+    color: var(--color-white);
+    padding: 100px 20px 120px;
+    text-align: center;
+    position: relative;
+    animation: fadeIn 1s ease;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    letter-spacing: -1.5px;
+}
+
+.hero p {
+    color: var(--color-gray-light);
+    font-size: 1.25rem;
+    margin-bottom: 35px;
+}
+
+/* Formulário de Pesquisa Rápida */
+.quick-search {
+    max-width: 1000px;
+    margin: -50px auto 70px;
+    background: var(--color-white);
+    padding: 30px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    z-index: 10;
+}
+
+.quick-search form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) 140px;
+    gap: 20px;
+    align-items: end;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--color-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-group select, .form-group input, .form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--color-gray-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg-light);
+    font-size: 0.95rem;
+    color: var(--color-black);
+    transition: var(--transition);
+}
+
+.form-group select:focus, .form-group input:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-black);
+    background: var(--color-white);
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Grids e Seções Centralizadas */
+.featured-vehicles, .why-choose-us, .services, .statistics, .reviews, .why-choose-about, .our-numbers, .our-team, .about-reviews {
+    max-width: 1200px;
+    margin: 80px auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.featured-vehicles h2, .why-choose-us h2, .services h2, .reviews h2, .technical-specs h2, .financing-simulator h2, .similar-vehicles h2, .our-numbers h2, .our-team h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 40px;
+    position: relative;
+    display: inline-block;
+}
+
+.featured-vehicles h2::after, .why-choose-us h2::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 3px;
+    background: var(--color-black);
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+/* Grid de Veículos */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+}
+
+.card-vehicle {
+    background: var(--color-white);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-gray-light);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.card-vehicle:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-8px);
+    border-color: var(--color-black);
+}
+
+.card-vehicle img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    background-color: var(--color-gray-light);
+    transition: var(--transition);
+}
+
+.card-vehicle:hover img {
+    transform: scale(1.03);
+}
+
+.card-vehicle .card-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.card-vehicle h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.card-vehicle .details {
+    font-size: 0.85rem;
+    color: var(--color-gray-medium);
+    margin-bottom: 15px;
+}
+
+.card-vehicle .price {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--color-black);
+    margin-top: auto;
+    margin-bottom: 15px;
+}
+
+/* Benefícios & Estatísticas */
+.benefits-grid, .numbers-grid, .team-grid, .reviews-grid, .faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+}
+
+.benefit-card, .benefit-item, .stat-item, .number-card, .team-card, .review-card, .faq-item, .mvv-card {
+    background: var(--color-white);
+    padding: 30px 20px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-gray-light);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+}
+
+.benefit-card:hover, .stat-item:hover, .number-card:hover, .team-card:hover, .review-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-black);
+}
+
+.stat-item h3, .number-card h3 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: var(--color-black);
+    margin-bottom: 5px;
+}
+
+/* ==========================================================================
+   5. PÁGINA DE ESTOQUE (INVENTORY.PHP)
+   ========================================================================== */
+.search-bar-container {
+    max-width: 1200px;
+    margin: 0 auto 30px;
+    padding: 0 20px;
+}
+
+.search-form {
+    display: flex;
+    gap: 15px;
+}
+
+.search-form input {
+    flex: 1;
+    padding: 15px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-gray-border);
+    font-size: 1rem;
+}
+
+.inventory-container {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 40px;
+    align-items: start;
+}
+
+.filters-sidebar {
+    background: var(--color-white);
+    padding: 25px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-gray-light);
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 90px;
+}
+
+.filters-sidebar h3 {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--color-black);
+}
+
+.filter-group {
+    margin: 20px 0;
+    text-align: left;
+}
+
+.filter-group h4 {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    color: var(--color-gray-dark);
+}
+
+.filter-group label {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--color-gray-dark);
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+.inventory-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--color-white);
+    padding: 15px 25px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-gray-light);
+    margin-bottom: 30px;
+}
+
+/* Paginação */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 50px;
+}
+
+.page-link {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-border);
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+}
+
+.page-link.active, .page-link:hover {
+    background: var(--color-black);
+    color: var(--color-white);
+    border-color: var(--color-black);
+}
+
+/* ==========================================================================
+   6. PÁGINA DE DETALHES DO VEÍCULO (VEHICLE.PHP)
+   ========================================================================== */
+.vehicle-hero-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 40px;
+    margin-bottom: 60px;
+    align-items: start;
+}
+
+.main-image img {
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+}
+
+.thumbnail-list {
+    display: flex;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.thumbnail-list img {
+    width: 90px;
+    height: 65px;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: var(--transition);
+}
+
+.thumbnail-list img:hover, .thumbnail-list img.active {
+    border-color: var(--color-black);
+    transform: scale(1.05);
+}
+
+.vehicle-main-info {
+    background: var(--color-white);
+    padding: 35px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-gray-light);
+    box-shadow: var(--shadow-sm);
+}
+
+.vehicle-main-info h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+}
+
+.vehicle-main-info .price {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--color-black);
+    margin: 15px 0;
+}
+
+.quick-specs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin: 25px 0;
+    background: var(--color-bg-light);
+    padding: 20px;
+    border-radius: var(--radius-sm);
+}
+
+.action-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.action-buttons .btn {
+    flex: 1;
+}
+
+.highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin-bottom: 60px;
+}
+
+.highlight-card {
+    background: var(--color-white);
+    padding: 15px 20px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-gray-light);
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Tabela de Especificações */
+.specs-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--color-white);
+    margin-bottom: 60px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--color-gray-light);
+    box-shadow: var(--shadow-sm);
+}
+
+.specs-table td {
+    padding: 15px 25px;
+    border-bottom: 1px solid var(--color-gray-light);
+}
+
+.specs-table tr:nth-child(even) {
+    background-color: var(--color-bg-light);
+}
+
+/* Simulador */
+.financing-simulator {
+    background: var(--color-white);
+    padding: 40px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-gray-light);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 60px;
+    text-align: center;
+}
+
+.financing-simulator form {
+    max-width: 600px;
+    margin: 0 auto 25px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.simulation-result {
+    background: var(--color-black);
+    color: var(--color-white);
+    padding: 20px;
+    border-radius: var(--radius-sm);
+    display: inline-block;
+}
+
+/* ==========================================================================
+   7. CONTATO (CONTACT.PHP) & SOBRE (ABOUT.PHP)
+   ========================================================================== */
+.contact-cards-grid {
+    margin-bottom: 50px;
+}
+
+.contact-content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+    align-items: start;
+    margin-bottom: 60px;
+}
+
+.contact-form-section, .business-hours-section {
+    background: var(--color-white);
+    padding: 40px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-gray-light);
+    box-shadow: var(--shadow-sm);
+    text-align: left;
+}
+
+.contact-form-section .form-group {
+    margin-bottom: 20px;
+}
+
+.hours-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--color-gray-light);
+}
+
+.map-placeholder {
+    background: var(--color-white);
+    padding: 30px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-gray-light);
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.map-box {
+    height: 250px;
+    background: var(--color-bg-light);
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    color: var(--color-gray-medium);
+    font-weight: 600;
+}
+
+/* Avisos do PHP */
+.alert {
+    padding: 15px 20px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 30px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.alert-success {
+    background-color: var(--color-black);
+    color: var(--color-white);
+}
+
+.alert-danger {
+    background-color: var(--color-gray-light);
+    color: var(--color-black);
+    border: 1px solid var(--color-black);
+}
+
+.portfolio-disclaimer {
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-border);
+    padding: 20px;
+    border-radius: var(--radius-md);
+    font-size: 0.85rem;
+    color: var(--color-gray-medium);
+    margin: 40px 0;
+    text-align: center;
+}
+
+/* ==========================================================================
+   8. FOOTER & CALL TO ACTION
+   ========================================================================== */
+.cta-banner {
+    background: var(--color-black);
+    color: var(--color-white);
+    text-align: center;
+    padding: 80px 20px;
+    margin-top: 80px;
+}
+
+.cta-banner h2 {
+    font-size: 2.4rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+
+.cta-banner p {
+    color: var(--color-gray-light);
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+}
+
+.main-footer {
+    background-color: var(--color-dark);
+    color: var(--color-white);
+    padding: 70px 20px 20px;
+    border-top: 1px solid var(--color-gray-dark);
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 40px;
+    margin-bottom: 50px;
+}
+
+.footer-col h3, .footer-col h4 {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
+
+.footer-col p, .footer-col li {
+    color: var(--color-gray-medium);
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+}
+
+.footer-col a:hover {
+    color: var(--color-white);
+}
+
+.footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 25px;
+    border-top: 1px solid var(--color-gray-dark);
+    text-align: center;
+    color: var(--color-gray-medium);
+    font-size: 0.85rem;
+}
+
+/* ==========================================================================
+   9. ANIMAÇÕES & RESPONSIVIDADE
+   ========================================================================== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 900px) {
+    .inventory-container, 
+    .vehicle-hero-grid, 
+    .contact-content-grid,
+    .about-hero .about-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .filters-sidebar {
+        position: relative;
+        top: 0;
+    }
+
+    .hero h1 {
+        font-size: 2.4rem;
+    }
+
+    .quick-search form {
+        grid-template-columns: 1fr;
+    }
+
+    .main-nav {
+        display: none;
+    }
+
+    .action-buttons, .financing-simulator form {
+        grid-template-columns: 1fr;
+        flex-direction: column;
+    }
+}
